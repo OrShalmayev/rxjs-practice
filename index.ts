@@ -38,5 +38,5 @@ import { combineLatestExample } from './combineLatest';
 // catchErrorExample();
 // exampleOfFilterOrderImportance();
 // finalizeExample();
-// behaviorSubjectExamples();
-combineLatestExample();
+behaviorSubjectExamples();
+// combineLatestExample();
