@@ -30,13 +30,30 @@ import { catchErrorExample } from './catchError';
 import { exmpleOfFilterOrderImportance } from './exmaple-with-importance-of-filter-order';
 import { finalizeExample } from './finalize';
 import { behaviorSubjectExamples } from './behaviorSubject';
-import { combineLatestExample } from './combineLatest';
 
-// concatAllExample();
-// combineAllExample();
-// expandExample();
-// catchErrorExample();
-// exampleOfFilterOrderImportance();
-// finalizeExample();
-// behaviorSubjectExamples();
-combineLatestExample();
+export function combineLatestExample() {
+    const obs1 = interval(5000).pipe(
+        map((i) => {
+            console.log(i);
+            if (i >= 2) {
+                throw new Error('error');
+            }
+            return i;
+        }),
+        debug('obs1')
+    );
+    const obs2 = of('ob2');
+
+    combineLatest([obs1, obs2])
+        .pipe(
+            catchError((err, caught$) => {
+                console.log(err);
+                return caught$;
+            }),
+            finalize(() => {
+                console.log('finalize');
+            }),
+            debug('combineLatestExample')
+        )
+        .subscribe(console.log);
+}

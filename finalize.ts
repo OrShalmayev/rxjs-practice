@@ -28,15 +28,21 @@ import { debug } from './utils';
 import { concatAllExample } from './concatAll';
 import { catchErrorExample } from './catchError';
 import { exmpleOfFilterOrderImportance } from './exmaple-with-importance-of-filter-order';
-import { finalizeExample } from './finalize';
-import { behaviorSubjectExamples } from './behaviorSubject';
-import { combineLatestExample } from './combineLatest';
-
-// concatAllExample();
-// combineAllExample();
-// expandExample();
-// catchErrorExample();
-// exampleOfFilterOrderImportance();
-// finalizeExample();
-// behaviorSubjectExamples();
-combineLatestExample();
+export function finalizeExample() {
+    of('test')
+        .pipe(
+            map(() => {
+                throw throwError('failed');
+            }),
+            tap((res) => {
+                console.log('tap', res);
+            }),
+            catchError((err) => {
+                return throwError(err);
+            }),
+            finalize(() => {
+                console.log('finalize');
+            })
+        )
+        .subscribe();
+}
